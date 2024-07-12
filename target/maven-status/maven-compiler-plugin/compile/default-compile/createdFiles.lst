@@ -1,0 +1,6 @@
+Main.class
+org\cristianrosas\webapp\servlet\ProductoServlet.class
+org\cristianrosas\webapp\model\Producto.class
+org\cristianrosas\webapp\util\JPAUtil.class
+org\cristianrosas\webapp\service\IProductoService.class
+org\cristianrosas\webapp\service\ProductoService.class
