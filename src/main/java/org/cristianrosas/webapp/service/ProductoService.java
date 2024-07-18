@@ -4,14 +4,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
 import org.cristianrosas.webapp.model.Producto;
-import org.cristianrosas.webapp.util.JpaUtil;
+import org.cristianrosas.webapp.util.JPAUtil;
 
 public class ProductoService implements IProductoService{
 
     private EntityManager em;
     
     public ProductoService(){
-        this.em = JpaUtil.getEntityManager();
+        this.em = JPAUtil.getEntityManager();
     }
     
     @Override
