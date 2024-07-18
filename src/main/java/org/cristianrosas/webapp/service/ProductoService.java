@@ -1,44 +1,53 @@
 package org.cristianrosas.webapp.service;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import java.util.List;
 import org.cristianrosas.webapp.model.Producto;
-import org.cristianrosas.webapp.util.JPAUtil;
+import org.cristianrosas.webapp.util.JpaUtil;
 
+public class ProductoService implements IProductoService{
 
-public class ProductoService implements IProductoService {
-    
     private EntityManager em;
     
     public ProductoService(){
-        this.em = JPAUtil.getEntityManager();
+        this.em = JpaUtil.getEntityManager();
     }
-
+    
     @Override
-    public List<Producto> ListarProductos() {
-        return em.createQuery("SEELCT p FROM Producto p", Producto.class).getResultList();
+    public List<Producto> listarProductos() {
+        return em.createQuery("SELECT p FROM Producto p", Producto.class).getResultList();
     }
 
     @Override
     public void agregarProducto(Producto producto) {
-        em.persist(producto);
+        EntityTransaction transaction = em.getTransaction();
+        
+        try{
+            transaction.begin();
+            em.persist(producto);
+            transaction.commit();
+        }catch(Exception e){
+            if(transaction.isActive()){
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void eliminarProducto(int productoId) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Producto buscarProductoId(int productoId) {
-        Producto producto = null;
-        return producto;
+    public void buscarProductoPorId(int productoId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void editatProducto(Producto producto) {
-       
+    public void editarProducto(Producto producto) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
     
 }

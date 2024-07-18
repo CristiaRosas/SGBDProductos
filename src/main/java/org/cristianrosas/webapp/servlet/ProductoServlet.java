@@ -7,48 +7,47 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.cristianrosas.webapp.model.Producto;
 import org.cristianrosas.webapp.service.ProductoService;
 
-
 @WebServlet("/producto-servlet")
 @MultipartConfig
-public class ProductoServlet extends HttpServlet {
-    
-    private ProductoService productoService;
+
+public class ProductoServlet extends HttpServlet{
+
+    private ProductoService ps;
     
     @Override
     public void init() throws ServletException{
         super.init();
-        this.productoService = new ProductoService();
+        this.ps = new ProductoService();
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Producto> productos = productoService.ListarProductos();
-        req.setAttribute("productos", productos);
-        req.getRequestDispatcher("./lista-productos/lista-productos.jsp").forward(req, resp);
+        List<Producto> productos = ps.listarProductos();
+        req.setAttribute("productos",productos);
+        req.getRequestDispatcher("/lista-productos/lista-productos.jsp").forward(req, resp);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> datosProducto = new ArrayList<>();
+        String path = req.getPathInfo();
         
-        String nombreproducto = req.getParameter("nombreproducto");
-        String marcaProducto = req.getParameter("marcaProducto");
-        String descripcionproducto = req.getParameter("descricionproducto");
-        String precioProducto = req.getParameter("precioProducto");
-        getServletContext().getRequestDispatcher("/formulario-productos/formulario-productos.jsp").forward(req, resp);
-        
-        datosProducto.add(nombreproducto);
-        datosProducto.add(marcaProducto);
-        datosProducto.add(descripcionproducto);
-        datosProducto.add(precioProducto);
+        if(path == null || path.equals("/")){
+            agregarProducto(req, resp);
+        }
     }
     
-    
-    
-    
+    public void agregarProducto(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nombre = req.getParameter("nombreProducto");
+        String marca = req.getParameter("marcaProducto");
+        String descripcion = req.getParameter("descripcionProducto");
+        Double precio = Double.parseDouble(req.getParameter("precioProducto"));
+        
+        ps.agregarProducto(new Producto(nombre, marca, descripcion, precio));
+        
+        resp.sendRedirect(req.getContextPath() + "/index.jsp");
+    }
 }

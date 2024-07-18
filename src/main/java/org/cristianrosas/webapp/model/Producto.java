@@ -7,23 +7,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+@Table(name = "Productos")
 @Entity
-@Table(name="Productos")
 public class Producto {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ProductoId;
+    private int productoId;
     private String nombreProducto;
     private String marcaProducto;
     private String descripcionProducto;
+        @Column(name = "precio")
+    private double precioProducto;
 
-    public int getProductoId() {
-        return ProductoId;
+    public Producto() {
     }
 
-    public void setProductoId(int ProductoId) {
-        this.ProductoId = ProductoId;
+    public Producto(String nombreProducto, String marcaProducto, String descripcionProducto, double precioProducto) {
+        this.nombreProducto = nombreProducto;
+        this.marcaProducto = marcaProducto;
+        this.descripcionProducto = descripcionProducto;
+        this.precioProducto = precioProducto;
+    }
+    
+    public Producto(int productoId, String nombreProducto, String marcaProducto, String descripcionProducto, double precioProducto) {
+        this.productoId = productoId;
+        this.nombreProducto = nombreProducto;
+        this.marcaProducto = marcaProducto;
+        this.descripcionProducto = descripcionProducto;
+        this.precioProducto = precioProducto;
+    }
+
+    public long getProductoId() {
+        return productoId;
+    }
+
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
     public String getNombreProducto() {
@@ -50,36 +70,18 @@ public class Producto {
         this.descripcionProducto = descripcionProducto;
     }
 
-    public double getPrecio() {
-        return precio;
+    public double getPrecioProducto() {
+        return precioProducto;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
-    @Column(name="Precio")
-    private double precio;
-
-    public Producto() {
+    public void setPrecioProducto(double precioProducto) {
+        this.precioProducto = precioProducto;
     }
 
-    public Producto(int ProductoId, String nombreProducto, String marcaProducto, String descripcionProducto, double precio) {
-        this.ProductoId = ProductoId;
-        this.nombreProducto = nombreProducto;
-        this.marcaProducto = marcaProducto;
-        this.descripcionProducto = descripcionProducto;
-        this.precio = precio;
+    @Override
+    public String toString() {
+        return "Producto{" + "productoId=" + productoId + ", nombreProducto=" + nombreProducto + ", marcaProducto=" + marcaProducto + ", descripcionProducto=" + descripcionProducto + ", precioProducto=" + precioProducto + '}';
     }
-
-    public Producto(String nombreProducto, String marcaProducto, String descripcionProducto, double precio) {
-        this.nombreProducto = nombreProducto;
-        this.marcaProducto = marcaProducto;
-        this.descripcionProducto = descripcionProducto;
-        this.precio = precio;
-    }
-    
-    
-    
     
     
 }
